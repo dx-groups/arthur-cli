@@ -1,6 +1,6 @@
 # arthur-cli
 
-The [arthur](https://github.com/elephant-fe/athena) command line utility.
+The [arthur](https://github.com/dx-groups/athena) command line utility.
 
 ## Getting Started
 

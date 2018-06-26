@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elephant-fe/athena.git"
+    "url": "git+https://github.com/dx-groups/athena.git"
   },
   "keywords": [
     "arthur",
@@ -26,9 +26,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/elephant-fe/athena/issues"
+    "url": "https://github.com/dx-groups/athena/issues"
   },
-  "homepage": "https://github.com/elephant-fe/athena#readme",
+  "homepage": "https://github.com/dx-groups/athena#readme",
   "dependencies": {
     "@babel/cli": "^7.0.0-beta.49",
     "@babel/core": "^7.0.0-beta.49",
