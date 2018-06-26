@@ -1,0 +1,72 @@
+{
+  "name": "@dx-groups/arthur-cli",
+  "version": "1.0.0",
+  "description": "The arthur command line utility",
+  "bin": {
+    "arthur": "./bin/arthur.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf lib && babel src --out-dir lib",
+    "pub": "npm publish --access public --registry=https://registry.npmjs.org",
+    "lint": "eslint src bin",
+    "lint-fix": "eslint --fix src bin",
+    "validate": "npm ls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elephant-fe/athena.git"
+  },
+  "keywords": [
+    "arthur",
+    "cli"
+  ],
+  "authors": [
+    "alcat2008 <ge_yangyang@126.com> (https://github.com/alcat2008)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elephant-fe/athena/issues"
+  },
+  "homepage": "https://github.com/elephant-fe/athena#readme",
+  "dependencies": {
+    "@babel/cli": "^7.0.0-beta.49",
+    "@babel/core": "^7.0.0-beta.49",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.49",
+    "@babel/preset-env": "^7.0.0-beta.49",
+    "@babel/preset-react": "^7.0.0-beta.49",
+    "@babel/preset-stage-0": "^7.0.0-beta.49",
+    "@babel/runtime": "^7.0.0-beta.49",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "8.2.3",
+    "babel-jest": "22.4.3",
+    "babel-loader": "^8.0.0-beta.3",
+    "babel-preset-env": "^1.7.0",
+    "chalk": "2.4.1",
+    "commander": "^2.15.1",
+    "eslint": "4.19.1",
+    "eslint-loader": "2.0.0",
+    "fs-extra": "^6.0.1",
+    "nunjucks": "^3.1.3",
+    "precommit-hook-eslint": "^3.0.0",
+    "through2": "^2.0.3",
+    "update-notifier": "^2.5.0",
+    "vinyl-fs": "^3.0.3"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.8.2",
+    "rimraf": "^2.6.2"
+  },
+  "files": [
+    "bin",
+    "boilerplate",
+    "lib",
+    "templates"
+  ],
+  "pre-commit": [
+    "lint"
+  ]
+}
