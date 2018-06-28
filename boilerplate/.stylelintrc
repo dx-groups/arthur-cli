@@ -1,5 +1,5 @@
 {
-  "extends": "stylelint-config-standard",
+  "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
   "rules": {
     "comment-empty-line-before": null,
     "declaration-empty-line-before": null,
@@ -19,6 +19,7 @@
     "value-list-max-empty-lines": null,
     "font-family-no-missing-generic-family-keyword": null,
     "no-descending-specificity": null,
+    "value-list-comma-newline-after": null,
     "color-hex-length": "long",
     "selector-pseudo-class-no-unknown": [true, { ignorePseudoClasses: ['global'] }]
   }

@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "precommit": "lint-staged",
     "start": "athena start",
     "test": "athena test --env=jsdom",
     "lint": "athena lint src",
@@ -7,21 +8,32 @@
     "build": "athena build",
     "build:test": "ATHENA_ENV_BUILD_ENV=test athena build",
     "analyze": "ATHENA_ENV_BUILD_ENV=test athena build --report",
-    "validate": "npm ls"
+    "prettier": "prettier --write \"src/**/*.{js,ts,jsx,less}\""
   },
   "dependencies": {
     "@dx-groups/arthur": "^1.1.1",
     "@dx-groups/utils": "^1.0.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-hot-loader": "^4.3.0",
     "react-loadable": "^5.4.0"
   },
   "devDependencies": {
-    "@dx-groups/athena": "^2.1.1",
-    "babel-plugin-import": "^1.8.0",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-react": "^7.9.1"
+    "@dx-groups/athena": "^2.1.2",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.10.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
+    "prettier": "1.13.6",
+    "stylelint-config-prettier": "^3.3.0"
   },
-  "pre-commit": [
-    "lint"
-  ]
+  "lint-staged": {
+    "src/**/*.{js,ts,jsx,less}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
 }

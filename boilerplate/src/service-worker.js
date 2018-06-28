@@ -1,13 +1,15 @@
+/* global workbox */
+
 // 设置为开发模式
 // workbox.setConfig({ debug: true })
 
-workbox.skipWaiting()
-workbox.clientsClaim()
+workbox.skipWaiting();
+workbox.clientsClaim();
 
 // 设置缓存名称前缀
 workbox.core.setCacheNameDetails({
-  prefix: 'enterprise-applications-template'
-})
+  prefix: 'enterprise-applications-template',
+});
 
 /*
 * 设置缓存策略
@@ -29,16 +31,13 @@ workbox.routing.registerRoute(
     plugins: [
       // 这个插件是让匹配的请求的符合开发者指定的条件的返回结果可以被缓存
       new workbox.cacheableResponse.Plugin({
-        statuses: [0, 200]
-      })
-    ]
+        statuses: [0, 200],
+      }),
+    ],
   })
-)
+);
 
 // sw-register网络请求优先
-workbox.routing.registerRoute(
-  /\/sw-register\.js/,
-  workbox.strategies.networkFirst()
-)
+workbox.routing.registerRoute(/\/sw-register\.js/, workbox.strategies.networkFirst());
 
-workbox.precaching.precacheAndRoute(self.__precacheManifest)
+workbox.precaching.precacheAndRoute(self.__precacheManifest);
