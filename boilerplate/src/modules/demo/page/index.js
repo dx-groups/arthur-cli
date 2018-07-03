@@ -18,12 +18,8 @@ export default class Page extends Component {
       <div className={styles.page}>
         <p>{this.props.count}</p>
 
-        <button type="button" onClick={e => this._handleAction(e, 'increase')}>
-          increase
-        </button>
-        <button type="button" onClick={e => this._handleAction(e, 'decrease')}>
-          decrease
-        </button>
+        <button type="button" onClick={e => this._handleAction(e, 'increase')}>increase</button>
+        <button type="button" onClick={e => this._handleAction(e, 'decrease')}>decrease</button>
       </div>
     );
   }

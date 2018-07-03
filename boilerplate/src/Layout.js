@@ -1,6 +1,6 @@
 import React, { Component, createElement } from 'react';
-import logo from './logo.png';
 import styles from './Layout.less';
+import logo from './logo.png';
 
 export default class Layout extends Component {
   render() {
