@@ -36,7 +36,7 @@ module.exports = function generate(program) {
         console.log(`\nCreating arthur module ${name} in ${cwd}\n`)
 
         transformFile(path.resolve(cwd, name), 'module', { name })
-        transformFile(path.resolve(cwd, name), 'index', { name: name.replace(/( |^)[a-z]/g, s => s.toUpperCase()) })
+        transformFile(path.resolve(cwd, name), 'index', { className: name.replace(/( |^)[a-z]/g, s => s.toUpperCase()) })
         transformFile(path.resolve(cwd, name), 'menu', { name })
         transformFile(path.resolve(cwd, name), 'routes', { name })
 
@@ -44,8 +44,10 @@ module.exports = function generate(program) {
       }
       case 'submodule': {
         console.log(`\nCreating arthur submodule ${name} in ${cwd}\n`)
-        transformFile(path.resolve(cwd, name), 'module', { name })
-        transformFile(path.resolve(cwd, name), 'submodule', { name: name.replace(/( |^)[a-z]/g, s => s.toUpperCase()) }, 'index')
+        const pathArr = cwd.split('/')
+        const parentName = pathArr[pathArr.length-1]
+        transformFile(path.resolve(cwd, name), 'submodule', { name, parentName }, 'module')
+        transformFile(path.resolve(cwd, name), 'subindex', { name, parentName, className: name.replace(/( |^)[a-z]/g, s => s.toUpperCase()) }, 'index')
 
         break
       }
