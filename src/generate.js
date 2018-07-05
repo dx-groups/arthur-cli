@@ -45,7 +45,7 @@ module.exports = function generate(program) {
       case 'submodule': {
         console.log(`\nCreating arthur submodule ${name} in ${cwd}\n`)
         const pathArr = cwd.split('/')
-        const parentName = pathArr[pathArr.length-1]
+        const parentName = pathArr[pathArr.length - 1]
         transformFile(path.resolve(cwd, name), 'submodule', { name, parentName }, 'module')
         transformFile(path.resolve(cwd, name), 'subindex', { name, parentName, className: name.replace(/( |^)[a-z]/g, s => s.toUpperCase()) }, 'index')
 
