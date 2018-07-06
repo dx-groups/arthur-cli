@@ -24,7 +24,7 @@ export default {
           return { status: 'error' };
         }
         return { status: 'success' };
-      }),
+      }).catch(() => ({ status: 'error' })),
     save: arg => dispatch =>
       fetchData(arg.id ? apis.{{ apisPoint }}{{ name }}.update : apis.{{ apisPoint }}{{ name }}.save, arg).then(
         res => {
@@ -34,7 +34,7 @@ export default {
           }
           return { status: 'success' };
         }
-      ),
+      ).catch(() => ({ status: 'error' })),
     detail: arg => dispatch =>
       fetchData(apis.{{ apisPoint }}{{ name }}.detail, arg).then(res => {
         if (res.code !== 0) {
@@ -42,7 +42,7 @@ export default {
           return { status: 'error' };
         }
         return { status: 'success', result: res.data };
-      }),
+      }).catch(() => ({ status: 'error' })),
   },
 
   reducers: {
