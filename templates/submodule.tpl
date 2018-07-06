@@ -1,11 +1,11 @@
 import fetchData from 'Utils/fetch';
-import apis from 'Modules/{{ parentName }}/apis';
+import apis from 'Modules/{{ moduleName }}/apis';
 import { ReduckHelper } from 'Utils/helper';
 import { message } from 'antd';
 
 // ===========================> Action Types <=========================== //
 
-export const SET_LIST = '/spa/{{ parentName }}/{{ name }}/SET_LIST'; // 商品中心
+export const SET_LIST = '/spa/{{ parentPath }}/{{ name }}/SET_LIST'; // 商品中心
 
 export default {
   namespace: '{{ name }}',
@@ -16,9 +16,9 @@ export default {
 
   actions: {
     getList: arg =>
-      ReduckHelper.genListAction(arg, fetchData, apis.{{ parentName }}.{{ name }}.list, SET_LIST),
+      ReduckHelper.genListAction(arg, fetchData, apis.{{ apisPoint }}{{ name }}.list, SET_LIST),
     del: arg => dispatch =>
-      fetchData(apis.{{ parentName }}.{{ name }}.del, arg).then(res => {
+      fetchData(apis.{{ apisPoint }}{{ name }}.del, arg).then(res => {
         if (res.code !== 0) {
           message.error(res.errmsg);
           return { status: 'error' };
@@ -26,7 +26,7 @@ export default {
         return { status: 'success' };
       }),
     save: arg => dispatch =>
-      fetchData(arg.id ? apis.{{ parentName }}.{{ name }}.update : apis.{{ parentName }}.{{ name }}.save, arg).then(
+      fetchData(arg.id ? apis.{{ apisPoint }}{{ name }}.update : apis.{{ apisPoint }}{{ name }}.save, arg).then(
         res => {
           if (res.code !== 0) {
             message.error(res.errmsg);
@@ -36,7 +36,7 @@ export default {
         }
       ),
     detail: arg => dispatch =>
-      fetchData(apis.{{ parentName }}.{{ name }}.detail, arg).then(res => {
+      fetchData(apis.{{ apisPoint }}{{ name }}.detail, arg).then(res => {
         if (res.code !== 0) {
           message.error(res.errmsg);
           return { status: 'error' };

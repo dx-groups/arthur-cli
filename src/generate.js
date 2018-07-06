@@ -20,6 +20,8 @@ function transformFile(_path, _template, params, _filename) {
 
 module.exports = function generate(program) {
   const cwd = process.cwd()
+  const pathArr = cwd.split('/')
+  const upFolderName = pathArr[pathArr.length - 1]
 
   const [type, name] = program.args
 
@@ -33,8 +35,12 @@ module.exports = function generate(program) {
         break
       }
       case 'module': {
-        console.log(`\nCreating arthur module ${name} in ${cwd}\n`)
+        if (upFolderName !== 'modules') {
+          console.log(chalk.cyan('please generate files in the modules folder.'))
+          return
+        }
 
+        console.log(`\nCreating arthur module ${name} in ${cwd}\n`)
         transformFile(path.resolve(cwd, name), 'module', { name })
         transformFile(path.resolve(cwd, name), 'index', { className: name.replace(/( |^)[a-z]/g, s => s.toUpperCase()) })
         transformFile(path.resolve(cwd, name), 'menu', { name })
@@ -43,11 +49,33 @@ module.exports = function generate(program) {
         break
       }
       case 'submodule': {
+        if (!pathArr.includes('modules') || upFolderName === 'modules') {
+          console.log(chalk.cyan('please generate files in the modules subordinate folder.'))
+          return
+        }
+
+        // '/' 文件路径
+        const parentPath = cwd.split('modules/')[1]
+        // 当前模块名
+        const moduleName = parentPath.split('/')[0]
+        // '.' state 引用路径
+        const statePoint = parentPath.replace('/', '.')
+        // apis 路径去除当前模块名
+        let apisPoint = statePoint.substring(moduleName.length + 1, statePoint.length)
+        apisPoint = apisPoint.length > 0 ? `${apisPoint}.` : apisPoint
+
         console.log(`\nCreating arthur submodule ${name} in ${cwd}\n`)
-        const pathArr = cwd.split('/')
-        const parentName = pathArr[pathArr.length - 1]
-        transformFile(path.resolve(cwd, name), 'submodule', { name, parentName }, 'module')
-        transformFile(path.resolve(cwd, name), 'subindex', { name, parentName, className: name.replace(/( |^)[a-z]/g, s => s.toUpperCase()) }, 'index')
+        transformFile(path.resolve(cwd, name), 'submodule', {
+          name,
+          parentPath,
+          moduleName,
+          apisPoint,
+        }, 'module')
+        transformFile(path.resolve(cwd, name), 'subindex', {
+          name,
+          statePoint,
+          className: name.replace(/( |^)[a-z]/g, s => s.toUpperCase()),
+        }, 'index')
 
         break
       }

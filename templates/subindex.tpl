@@ -8,20 +8,20 @@ import Module from './module';
 const options = [{ name: '是', value: '0' }, { name: '否', value: '1' }];
 
 @connect(
-  ['{{ parentName }}.{{ name }}', 'common.showListSpin'],
+  ['{{ statePoint }}.{{ name }}', 'common.showListSpin'],
   state => ({
-    ...state['{{ parentName }}.{{ name }}'],
-    page: state['{{ parentName }}.{{ name }}'].{{ name }}Page,
-    filter: state['{{ parentName }}.{{ name }}'].{{ name }}Filter,
-    list: state['{{ parentName }}.{{ name }}'].{{ name }}List,
+    ...state['{{ statePoint }}.{{ name }}'],
+    page: state['{{ statePoint }}.{{ name }}'].{{ name }}Page,
+    filter: state['{{ statePoint }}.{{ name }}'].{{ name }}Filter,
+    list: state['{{ statePoint }}.{{ name }}'].{{ name }}List,
     showListSpin: state['common.showListSpin'],
   })
 )
 export default class {{ className }} extends Component {
   _columns = [
-    genPlanColumn('id', 'id'),
-    genEllipsisColumn('ellipsis', 'ellipsis', 20),
-    genSelectColumn('select', 'select', options),
+    genPlanColumn('<planKey>', '<planTitle>'),
+    genEllipsisColumn('<ellipsisKey>', '<ellipsisTitle>', 20),
+    genSelectColumn('<selectKey>', '<selectTitle>', options),
     genPlanColumn('option', '操作', {
       render: (text, row) => (
         <div>
