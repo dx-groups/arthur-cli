@@ -5,26 +5,37 @@ import { message } from 'antd';
 
 // ===========================> Action Types <=========================== //
 
-export const SET_LIST = '/spa/{{ parentPath }}/{{ name }}/SET_LIST'; // 商品中心
+export const SET_LIST = '/spa/{{ parentPath }}/{{ name }}/SET_LIST';
+
+const Actions = {
+  getList: arg =>
+      ReduckHelper.genListAction(arg, fetchData, apis.{{ apisPoint }}{{ name }}.list, SET_LIST),
+}
 
 export default {
   namespace: '{{ name }}',
 
   state: {
-    ...ReduckHelper.genListState('{{ name }}', { keywords: undefined }), // 搜索项配置
+    ...ReduckHelper.genListState('{{ name }}', { keywords: undefined }),
   },
 
   actions: {
-    getList: arg =>
-      ReduckHelper.genListAction(arg, fetchData, apis.{{ apisPoint }}{{ name }}.list, SET_LIST),
-    del: arg => dispatch =>
-      fetchData(apis.{{ apisPoint }}{{ name }}.del, arg).then(res => {
+    getList: Actions.getList,
+    del: arg => (dispatch, getState) => {
+      const { {{ name }}Page, {{ name }}Filter, {{ name }}List } = getState()['{{ statePoint }}.{{ name }}'];
+      const current = Number({{ name }}Page.pageNo);
+      const pageNo = current > 1 ? current - 1 : 1; 
+      fetchData(apis.{{ apisPoint }}{{ name }}.del, arg).then((res) => {
         if (res.code !== 0) {
           message.error(res.errmsg);
-          return { status: 'error' };
         }
-        return { status: 'success' };
-      }).catch(() => ({ status: 'error' })),
+        if ({{ name }}List.length > 1) {
+          dispatch(Actions.getList({{ name }}Filter))
+        } else if ({{ name }}List.length === 1) {
+          dispatch(Actions.getList({ ...{{ name }}Filter, pageNo }))
+        }
+      }).catch(() => ({ status: 'error' }))
+    },
     save: arg => dispatch =>
       fetchData(arg.id ? apis.{{ apisPoint }}{{ name }}.update : apis.{{ apisPoint }}{{ name }}.save, arg).then(
         res => {

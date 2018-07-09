@@ -69,6 +69,7 @@ module.exports = function generate(program) {
           name,
           parentPath,
           moduleName,
+          statePoint,
           apisPoint,
         }, 'module')
         transformFile(path.resolve(cwd, name), 'subindex', {

@@ -92,18 +92,8 @@ export default class {{ className }} extends Component {
 
   // 删除
   _handleDelete = id => {
-    const { filter, list, page, dispatch } = this.props;
-    const current = Number(page.pageNo);
-    const pageNo = current > 1 ? current - 1 : 1;
-    dispatch(Module.actions.del({ id })).then(res => {
-      if (res.status === 'success') {
-        if (list.length > 1) {
-          dispatch(Module.actions.getList(filter));
-        } else if (list.length === 1) {
-          dispatch(Module.actions.getList({ ...filter, pageNo }));
-        }
-      }
-    });
+    const { dispatch } = this.props;
+    dispatch(Module.actions.del({ id }));
   };
 
   render() {
