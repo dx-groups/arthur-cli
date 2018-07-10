@@ -51,9 +51,9 @@ export default class {{ className }} extends Component {
     const { filter } = this.props;
     const fields = [
       {
-        key: 'keywords',
-        label: 'keywords',
-        initialValue: filter.keywords || undefined,
+        key: <keywords>,
+        label: <keywords>,
+        initialValue: filter.keywords || <initialValue>,
         type: 'Input',
       },
     ];

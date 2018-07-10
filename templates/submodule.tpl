@@ -16,7 +16,7 @@ export default {
   namespace: '{{ name }}',
 
   state: {
-    ...ReduckHelper.genListState('{{ name }}', { keywords: undefined }),
+    ...ReduckHelper.genListState('{{ name }}', { <key>: <value> }),
   },
 
   actions: {
@@ -24,7 +24,7 @@ export default {
     del: arg => (dispatch, getState) => {
       const { {{ name }}Page, {{ name }}Filter, {{ name }}List } = getState()['{{ statePoint }}.{{ name }}'];
       const current = Number({{ name }}Page.pageNo);
-      const pageNo = current > 1 ? current - 1 : 1; 
+      const pageNo = current > 1 ? current - 1 : 1;
       fetchData(apis.{{ apisPoint }}{{ name }}.del, arg).then((res) => {
         if (res.code !== 0) {
           message.error(res.errmsg);

@@ -1,6 +1,6 @@
 {
   "name": "@dx-groups/arthur-cli",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "The arthur command line utility",
   "bin": {
     "arthur": "./bin/arthur.js"
