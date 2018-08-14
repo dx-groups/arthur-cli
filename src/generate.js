@@ -4,6 +4,9 @@ const { readFileSync, existsSync } = require('fs')
 const fse = require('fs-extra')
 const chalk = require('chalk')
 const nunjucks = require('nunjucks')
+const inquirer = require('inquirer')
+
+const cwd = process.cwd()
 
 function transformFile(_path, _template, params, _filename) {
   const templatePath = path.resolve(__dirname, `../templates/${_template}.tpl`)
@@ -18,8 +21,52 @@ function transformFile(_path, _template, params, _filename) {
   }
 }
 
+function submodule(name) {
+  const questions = [{
+    type: 'list',
+    name: 'type',
+    message: 'Which type do you want to generate?',
+    choices: [
+      'basic',
+      'table',
+    ],
+  }]
+
+  inquirer.prompt(questions).then((answers) => {
+    // '/' 文件路径
+    const parentPath = cwd.split('modules/')[1]
+    // 当前模块名
+    const moduleName = parentPath.split('/')[0]
+    // '.' state 引用路径
+    const statePoint = parentPath.replace('/', '.')
+    // apis 路径去除当前模块名
+    let apisPoint = statePoint.substring(moduleName.length + 1, statePoint.length)
+    apisPoint = apisPoint.length > 0 ? `${apisPoint}.` : apisPoint
+
+    console.log(chalk.green(`\nCreating arthur submodule ${name} in ${cwd}\n`))
+    switch (answers.type) {
+      case 'basic':
+      case 'table':
+        transformFile(path.resolve(cwd, name), `submodule/${answers.type}module`, {
+          name,
+          parentPath,
+          moduleName,
+          statePoint,
+          apisPoint,
+        }, 'module')
+        transformFile(path.resolve(cwd, name), `submodule/${answers.type}index`, {
+          name,
+          statePoint,
+          className: name.replace(/( |^)[a-z]/g, s => s.toUpperCase()),
+        }, 'index')
+        break
+      default:
+        break
+    }
+  })
+}
+
 module.exports = function generate(program) {
-  const cwd = process.cwd()
   const pathArr = cwd.split('/')
   const upFolderName = pathArr[pathArr.length - 1]
 
@@ -53,31 +100,7 @@ module.exports = function generate(program) {
           console.log(chalk.cyan('please generate files in the modules subordinate folder.'))
           return
         }
-
-        // '/' 文件路径
-        const parentPath = cwd.split('modules/')[1]
-        // 当前模块名
-        const moduleName = parentPath.split('/')[0]
-        // '.' state 引用路径
-        const statePoint = parentPath.replace('/', '.')
-        // apis 路径去除当前模块名
-        let apisPoint = statePoint.substring(moduleName.length + 1, statePoint.length)
-        apisPoint = apisPoint.length > 0 ? `${apisPoint}.` : apisPoint
-
-        console.log(`\nCreating arthur submodule ${name} in ${cwd}\n`)
-        transformFile(path.resolve(cwd, name), 'submodule', {
-          name,
-          parentPath,
-          moduleName,
-          statePoint,
-          apisPoint,
-        }, 'module')
-        transformFile(path.resolve(cwd, name), 'subindex', {
-          name,
-          statePoint,
-          className: name.replace(/( |^)[a-z]/g, s => s.toUpperCase()),
-        }, 'index')
-
+        submodule(name)
         break
       }
       default:
